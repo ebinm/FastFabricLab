@@ -20,7 +20,7 @@ Note: Each step depends upon the success of the previous steps.
         * set up the channel with command: `ansible-playbook -i inventory/network/hosts.ini -v channel_setup.yaml`.
         * set up the chaincode with command: `ansible-playbook -i inventory/network/hosts.ini -v chaincode_setup.yaml`.
 
-   **Notes:** The nodes and scripts are created, so that the FastFabric network can be operated manually from the node instances after the preperation step. 
+   **Note:** The nodes and scripts are created, so that the FastFabric network can be operated manually from the node instances after the preperation step. 
    To see the manual usage have a look at the original repository https://github.com/cgorenflo/fabric.
 
 2. Test FastFabric network
