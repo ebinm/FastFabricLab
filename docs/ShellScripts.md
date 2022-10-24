@@ -1,19 +1,18 @@
 Shell Scripts
 ==============
 
-Some shell scripts are provided to automate environment setup and provide a logical grouping of various steps.
+Some shell scripts are provided to automate environment setup and provide a logical grouping of various steps.  
+All shell scripts are located in the [scripts/](../scripts) directory.
 
-All shell scripts are located in [scripts/](../scripts) directory
-
-Following shell scripts are availables:
+The following shell scripts are available:
 
 * [create_ssh_keypair.sh](../scripts/create_ssh_keypair.sh). This script creates a ssh keypair:
     1. Generate ssh keypair.
     2. Store ssh keypair in [ssh](../ssh).
     3. Copy key to the specified path in [.env](../.env).
 
-* [setup_env.sh](../scripts/setup_env.sh). This script is used by all other shell scripts to setup proper environment:
-    1. Cd to project root
+* [setup_env.sh](../scripts/setup_env.sh). This script is used by all other shell scripts to set up a proper environment:
+    1. Change directory to project root
     2. Export variables for Ansible
     3. If python virtual environment not present:
         * Create python3 virtual environment. 
@@ -31,19 +30,19 @@ Following shell scripts are availables:
     
 * [fastfabric_setup.sh](../scripts/fastfabric_setup.sh): This script prepares and runs FastFabric:
     1. Prepare FastFabric network on the CLI
-        * `fastfabric_setup`: use the existing crypto_config and channel_artifacts, if present.
-        * `fastfabric_setup -r`: generate new crypto_config and channel_artifacts.
+        * `fastfabric_setup`: use the existing crypto-config and channel-artifacts, if present.
+        * `fastfabric_setup -r`: generate new crypto-config and channel-artifacts.
     2. Run orderer node on specified instance with Ansible.
     3. Run storage node on specified instance with Ansible.
     4. Run endorser nodes on specified instances with Ansible.
     5. Run fastpeer node on specified instance with Ansible.
     6. Set up channel for all nodes with Ansible
-    7. Set up chaincode of [chaincode](../chaincode) with Ansible
+    7. Set up chaincode of directory [chaincode](../chaincode) with Ansible
 
 * [fastfabric_prepare.sh](../scripts/fastfabric_prepare.sh): This script prepares FastFabric:
     1. Prepare FastFabric network on the CLI
-        * `fastfabric_prepare`: use the existing crypto_config and channel_artifacts, if present.
-        * `fastfabric_prepare -r`: generate new crypto_config and channel_artifacts.
+        * `fastfabric_prepare`: use the existing crypto-config and channel-artifacts, if present.
+        * `fastfabric_prepare -r`: generate new crypto-config and channel-artifacts.
 
 * [fastfabric_run.sh](../scripts/fastfabric_run.sh): This script runs FastFabric:
     1. Run orderer node on specified instance with Ansible.
@@ -51,7 +50,7 @@ Following shell scripts are availables:
     3. Run endorser nodes on specified instances with Ansible.
     4. Run fastpeer node on specified instance with Ansible.
     5. Set up channel for all nodes with Ansible
-    6. Set up chaincode of [chaincode](../chaincode) with Ansible
+    6. Set up chaincode of directory [chaincode](../chaincode) with Ansible
 
 * [fastfabric_delete.sh](../scripts/fastfabric_delete.sh): This script deletes FastFabric:
     1. Terminate all FastFabric nodes.
@@ -80,7 +79,7 @@ Following shell scripts are availables:
 
 
 There are scripts to manually set up FastFabric step by step. 
-These are useful when operating directly from the instances or modifying the setps.
+These are useful when operating directly from the instances or modifying the steps.
 
 * [run_orderer.sh](../scripts/run_orderer.sh): This script runs the orderer node.
 
@@ -94,7 +93,7 @@ These are useful when operating directly from the instances or modifying the set
 
 * [chaincode_setup.sh](../scripts/chaincode_setup.sh): This script sets up the chaincode.
 
-Note: Using these scripts can lead to errors as they need to follow the strict process of setting up a FastFabric network.
+**Note:** Using these scripts can lead to errors as they need to follow the strict process of setting up a FastFabric network.
 For more information on how to use them, visit the original repository of FastFabric (https://github.com/cgorenflo/fabric).
 
 
