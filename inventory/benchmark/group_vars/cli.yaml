@@ -1,0 +1,19 @@
+#######################################
+###### Variables for cli host ########
+#######################################
+
+# Root path
+root_path: "{{ lookup('env', 'ROOT_PATH') }}"
+inventory_path: "{{ lookup('env', 'INVENTORY_DIR_PATH') }}"
+#fabric_path: "{{ lookup('env', 'ROOT_PATH') }}/src/github.com/hyperledger/fabric"
+scripts_path: "{{ root_path }}/fabric_scripts"
+caliper_path: "{{ root_path }}/caliper"
+
+# Network config
+channel: "{{ lookup('env', 'CHANNEL') }}"
+chaincode: "{{ lookup('env', 'CHAINCODE') }}"
+orderer: "{{ lookup('env', 'ORDERER_ADDRESS') }}"
+endorsers: "{{ lookup('env', 'ENDORSER_ADDRESSES')|split(':')}}"
+fastpeer: "{{ lookup('env', 'FAST_PEER_ADDRESS') }}"
+peer_domain: "{{ lookup('env', 'PEER_DOMAIN') }}"
+orderer_domain: "{{ lookup('env', 'ORDERER_DOMAIN') }}"

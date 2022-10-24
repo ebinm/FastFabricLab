@@ -1,0 +1,26 @@
+smallbankArgs: &smallbank-args
+  accountsGenerated: 100
+  txnPerBatch: 1
+
+rateControl: &rate
+  type: fixed-rate
+  opts:
+    tps: 500
+
+test:
+  name: smallbank
+  workers:
+    number: 5
+  rounds:
+    - label: createSmallbank
+      txNumber: 1000
+      rateControl: *rate
+      workload:
+        module: workload_modules/smallbank/createSmallbank.js
+        arguments: *smallbank-args
+    - label: querySmallbank
+      txNumber: 1000
+      rateControl: *rate
+      workload:
+        module: workload_modules/smallbank/querySmallbank.js
+        arguments: *smallbank-args

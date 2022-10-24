@@ -1,0 +1,12 @@
+---
+- name: Export env variables permanently
+  blockinfile:
+    path: /home/ubuntu/.bashrc
+    block: |
+      export PATH=$PATH:/usr/local/go/bin
+      export GOPATH="{{ root_path }}"
+      export PATH=$PATH:$GOPATH/bin
+      export PATH=$PATH:$GOPATH
+
+  
+

@@ -1,0 +1,7 @@
+---
+
+- name: Terminate network
+  shell: |
+    killall orderer
+  args:
+    chdir: "{{ scripts_path }}"

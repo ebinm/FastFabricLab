@@ -1,0 +1,15 @@
+---
+
+- name: Check if Fastpeer is running
+  stat: 
+    path: "{{ root_path }}/running.ignore"
+  register: running
+
+- include_tasks: tasks/start_fastpeer.yaml
+  when: running.stat.exists == False
+
+- name: Mark Fastpeer as running
+  file:
+      path: "{{ root_path }}/running.ignore"
+      state: touch
+      mode: 664

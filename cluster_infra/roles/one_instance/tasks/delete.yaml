@@ -1,0 +1,29 @@
+---
+
+- name: Delete OpenNebula instances
+  one_vm:
+    api_url: "{{ one_base_url }}"
+    api_username: "{{ one_username }}"
+    api_password: "{{ one_password }}"
+    instance_ids: "{{ hostvars[item].instance_id | int }}"
+    state: absent
+  with_items: "{{ groups['network'] }}"
+
+- name: Mark python uninstalled
+  file:
+      path: "{{ lookup('env', 'INVENTORY_DIR_PATH') }}/install_python.ignore"
+      state: absent
+
+- name: Mark artifacts missing
+  file:
+      path: "{{ lookup('env', 'INVENTORY_DIR_PATH') }}/artifacts.ignore"
+      state: absent
+
+- name: Mark caliper uninstalled
+  file:
+      path: "{{ lookup('env', 'INVENTORY_DIR_PATH') }}/caliper.ignore"
+      state: absent
+
+
+#- name: Print Output of command
+#  debug: msg="{{ cmd_output.stdout }}"

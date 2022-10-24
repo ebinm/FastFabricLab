@@ -1,0 +1,8 @@
+---
+
+- name: Setup channel
+  shell: |
+    go env -w GO111MODULE=auto
+    ./channel_setup.sh
+  args:
+    chdir: "{{ scripts_path }}"

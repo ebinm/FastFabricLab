@@ -1,0 +1,18 @@
+---
+
+- name: Setup chaincode
+  shell: |
+    go env -w GO111MODULE=auto
+    ./test_chaincode.sh
+  args:
+    chdir: "{{ scripts_path }}"
+  register: result
+
+- name: Test Results
+  debug: 
+    msg: "{{ result.stdout_lines }}"
+
+#- name: Error
+#  debug: 
+#    msg: "{{ result.stderr }}"
+

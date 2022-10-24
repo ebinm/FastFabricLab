@@ -1,0 +1,23 @@
+---
+- name: Copy necessary data to nodes
+  copy:
+    src: "{{ cli_scripts_path }}"
+    dest: "{{ root_path }}"  
+    follow: yes
+
+- name: Copy binaries to nodes
+  copy:
+    src: "{{ cli_root_path }}/bin"
+    dest: "{{ root_path }}"
+    follow: yes
+
+- name: Delete previous chaincode
+  file:
+    path: "{{ root_path }}/src"
+    state: absent
+
+- name: Copy chaincode to nodes
+  copy:
+    src: "{{ cli_root_path }}/chaincode"
+    dest: "{{ root_path }}/src"
+    follow: no

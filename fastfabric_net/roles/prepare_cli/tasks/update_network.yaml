@@ -1,0 +1,6 @@
+---
+- name: Copy configuration file to scripts directory
+  copy:
+    src: "{{ root_path }}/.network"
+    dest: "{{ scripts_path }}/custom_parameters.sh"  
+    follow: yes

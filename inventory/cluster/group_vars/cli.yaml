@@ -1,0 +1,9 @@
+#######################################
+###### Variables for cli host ########
+#######################################
+
+# Root path
+root_path: "{{ lookup('env', 'ROOT_PATH') }}"
+inventory_path: "{{ lookup('env', 'INVENTORY_DIR_PATH') }}"
+fabric_path: "{{ lookup('env', 'ROOT_PATH') }}/src/github.com/hyperledger/fabric"
+scripts_path: "{{ fabric_path }}/fastfabric/scripts"

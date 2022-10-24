@@ -1,0 +1,13 @@
+#######################################
+###### Variables for cli host ########
+#######################################
+
+# Root path
+root_path: "/home/ubuntu/FastFabricLab"
+binaries_path: "{{ root_path }}/bin"
+scripts_path: "{{ root_path }}/fabric_scripts"
+chaincode_path: "{{ root_path }}/src/chaincode"
+
+
+
+

@@ -1,0 +1,99 @@
+---
+- name: Update apt cache
+  apt: update_cache=yes cache_valid_time=1800
+
+- name: Install Docker.io
+  apt: name=docker.io state=present
+
+- name: Install Docker-compose
+  apt: name=docker-compose state=present
+
+#- name: Download go file
+#  shell: wget https://go.dev/dl/go1.18.3.linux-amd64.tar.gz
+
+#- name: Remove exisiting go data
+#  shell: rm -rf /usr/local/go
+
+#- name: Install go
+#  shell: tar -C /usr/local -xzf go1.18.3.linux-amd64.tar.gz
+
+#- name: Create go directory
+#  shell: sudo mkdir go
+
+- name: Install go
+  shell: |
+    wget https://go.dev/dl/go1.18.3.linux-amd64.tar.gz
+    rm -rf /usr/local/go
+    tar -C /usr/local -xzf go1.18.3.linux-amd64.tar.gz
+    sudo mkdir go
+    cd go/
+
+- name: Export env variables permanently
+  blockinfile:
+    path: /home/ubuntu/.bashrc
+    block: |
+      export PATH=$PATH:/usr/local/go/bin
+      export GOPATH=/home/ubuntu/go
+      export PATH=$PATH:$GOPATH/bin
+      export PATH=$PATH:$GOPATH
+
+- name: Install Nodejs
+  apt: name=nodejs state=present
+
+- name: Install NPM
+  apt: name=npm state=present
+
+#- name: Change directory permissions
+#  file:
+#    path: /home/ubuntu/go
+#    mode: '777'
+  
+- name: Create directory for hyperledger
+  shell: mkdir -p $GOPATH/src/github.com/hyperledger/
+  args:
+    chdir: /home/ubuntu/go
+
+- name: Clone git repository
+  git:
+    repo: 'https://github.com/cgorenflo/fabric.git'
+    dest: /home/ubuntu/go/src/github.com/hyperledger/fabric
+    clone: yes
+
+#- name: Change directory permissions
+#  file:
+#    path: /home/ubuntu/go
+#    mode: '777'
+#    recurse: yes
+
+#- name: Create directory for go builds
+#  shell: mkdir -p $GOPATH/src/github.com/hyperledger/fabric/.build/bin
+
+#- name: Set permission for production file
+#  shell: mkdir -p -m777 /var/hyperledger/production
+
+#- name: Solve buuilding issue
+#  shell: go env -w GO111MODULE=auto
+
+#- name: Build cryptogen
+#  shell: |
+#    cd home/ubuntu/go/src/github.com/hyperledger/fabric/common/tools/cryptogen
+
+#- name: Build configtxgen
+#  shell: cd $GOPATH/src/github.com/hyperledger/fabric/common/tools/configtxgen && go build
+
+- name: Create crypto binaries
+  shell: |
+    export PATH=$PATH:/usr/local/go/bin
+    export GOPATH=/home/ubuntu/go
+    export PATH=$PATH:$GOPATH/bin
+    export PATH=$PATH:$GOPATH
+    mkdir -p $GOPATH/src/github.com/hyperledger/fabric/.build/bin
+    mkdir -p -m777 /var/hyperledger/production
+    go env -w GO111MODULE=auto
+    cd $GOPATH/src/github.com/hyperledger/fabric/common/tools/cryptogen && go build
+    cd $GOPATH/src/github.com/hyperledger/fabric/common/tools/configtxgen && go build
+    cd $GOPATH/src/github.com/hyperledger/fabric
+    mv common/tools/cryptogen/cryptogen .build/bin
+    mv common/tools/configtxgen/configtxgen .build/bin
+
+

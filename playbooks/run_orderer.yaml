@@ -1,0 +1,17 @@
+# Ansible Playbook to run orderer node
+# Note: Call with -i inventory/network/hosts.ini
+---
+
+# Run orderer
+- hosts: orderer
+  remote_user: ubuntu
+  #become: true
+  roles:
+    - { "role": orderer }
+  environment:
+    - PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ root_path }}:{{ root_path }}/bin"
+    - GOPATH: "{{ root_path }}"
+
+
+
+

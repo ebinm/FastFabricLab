@@ -1,0 +1,27 @@
+# Ansible Playbook to prepare Nodes for FastFabric network
+# Note: Call with -i inventory/network/hosts.ini
+---
+
+# Pre setup tasks
+- hosts: cli
+  remote_user: ubuntu
+  become: true
+  roles:
+    - { "role": prepare_cli }
+  environment:
+    - PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ root_path }}:{{ root_path }}/bin"
+    - GOPATH: "{{ root_path }}"
+
+
+# Copy files
+- hosts: network
+  remote_user: ubuntu
+  become: true
+  roles:
+    - { "role": copy_data }
+  environment:
+    - PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ root_path }}:{{ root_path }}/bin"
+    - GOPATH: "{{ root_path }}"
+
+
+

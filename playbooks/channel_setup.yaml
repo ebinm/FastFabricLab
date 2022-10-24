@@ -1,0 +1,17 @@
+# Ansible Playbook to setup a channel
+# Note: Call with -i inventory/network/hosts.ini
+---
+
+# Setup channel
+- hosts: endorser[0]
+  remote_user: ubuntu
+  #become: true
+  roles:
+    - { "role": channel_setup }
+  environment:
+    - PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ root_path }}:{{ root_path }}/bin"
+    - GOPATH: "{{ root_path }}"
+
+
+
+

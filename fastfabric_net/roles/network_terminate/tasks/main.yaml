@@ -1,0 +1,18 @@
+---
+- name: Check if node is running
+  stat: 
+    path: "{{ root_path }}/running.ignore"
+  register: running
+
+- include: tasks/terminate_peer.yaml
+  when: (peer|default(false))
+  ignore_errors: yes
+
+- include: tasks/terminate_orderer.yaml
+  when: (orderer|default(false))
+  ignore_errors: yes
+
+- name: Untag nodes as running
+  file:
+      path: "{{ root_path }}/running.ignore"
+      state: absent

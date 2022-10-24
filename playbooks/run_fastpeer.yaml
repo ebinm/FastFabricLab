@@ -1,0 +1,17 @@
+# Ansible Playbook to run fastpeer node
+# Note: Call with -i inventory/network/hosts.ini
+---
+
+# Run fastpeer
+- hosts: fastpeer
+  remote_user: ubuntu
+  #become: true
+  roles:
+    - { "role": fastpeer }
+  environment:
+    - PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ root_path }}:{{ root_path }}/bin"
+    - GOPATH: "{{ root_path }}"
+
+
+
+

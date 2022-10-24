@@ -1,0 +1,24 @@
+---
+- name: Copy configuration file to scripts directory
+  copy:
+    src: "{{ root_path }}/.network"
+    dest: "{{ scripts_path }}/custom_parameters.sh"  
+    follow: yes
+
+- name: Run script to create artifacts
+  script: "{{ scripts_path }}/create_artifacts.sh"
+  args:
+    chdir: "{{ scripts_path }}"
+
+- name: Change permission for channel-artifacts
+  file:
+    path: "{{ scripts_path }}/channel-artifacts"
+    mode: '0777'
+    recurse: yes
+
+- name: Change permission for crypto-gen
+  file:
+    path: "{{ scripts_path }}/crypto-config"
+    mode: '0777'
+    recurse: yes
+

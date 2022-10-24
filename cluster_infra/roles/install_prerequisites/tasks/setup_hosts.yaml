@@ -1,0 +1,41 @@
+---
+- name: Add orderer ips to hosts file
+  blockinfile:
+    path: /etc/hosts
+    block: |
+      {{ hostvars[item].ansible_host }} {{ hostvars[item].ansible_hostname }} {{ hostvars[item].ansible_hostname }}.{{ orderer_domain }}
+    #insertafter: "127.0.0.1 localhost"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK {{item}}"
+  with_items:
+    - "{{ groups['orderer'] }}"
+
+- name: Add storage ips to hosts file
+  blockinfile:
+    path: /etc/hosts
+    block: |
+      {{ hostvars[item].ansible_host }} {{ hostvars[item].ansible_hostname }} {{ hostvars[item].ansible_hostname }}.{{ peer_domain }}
+    #insertafter: "127.0.0.1 localhost"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK {{item}}"
+  with_items:
+    - "{{ groups['storage'] }}"
+
+- name: Add fastpeer ips to hosts file
+  blockinfile:
+    path: /etc/hosts
+    block: |
+      {{ hostvars[item].ansible_host }} {{ hostvars[item].ansible_hostname }} {{ hostvars[item].ansible_hostname }}.{{ peer_domain }}
+    #insertafter: "127.0.0.1 localhost"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK {{item}}"
+  with_items:
+    - "{{ groups['fastpeer'] }}"
+
+- name: Add endorser ips to hosts file
+  blockinfile:
+    path: /etc/hosts
+    block: |
+      {{ hostvars[item].ansible_host }} {{ hostvars[item].ansible_hostname }} {{ hostvars[item].ansible_hostname }}.{{ peer_domain }}
+    #insertafter: "127.0.0.1 localhost"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK {{item}}"
+  with_items:
+    - "{{ groups['endorser'] }}"
+

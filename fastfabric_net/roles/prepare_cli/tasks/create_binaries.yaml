@@ -1,0 +1,40 @@
+---
+- name: Create crypto binaries
+  shell: |
+    mkdir -p $GOPATH/src/github.com/hyperledger/fabric/.build/bin
+    mkdir -p -m777 /var/hyperledger/production
+    go env -w GO111MODULE=auto
+    cd $GOPATH/src/github.com/hyperledger/fabric/common/tools/cryptogen && go build
+    cd $GOPATH/src/github.com/hyperledger/fabric/common/tools/configtxgen && go build
+    cd $GOPATH/src/github.com/hyperledger/fabric
+    mv common/tools/cryptogen/cryptogen .build/bin
+    mv common/tools/configtxgen/configtxgen .build/bin
+    chmod -R 777 $GOPATH/src
+
+- name: Create orderer binary
+  shell: |
+    go env -w GO111MODULE=auto
+    ls -a
+    source base_parameters.sh
+    (cd ${FABRIC_ROOT} && make orderer)
+  args:
+    chdir: "{{ scripts_path }}"
+    executable: /bin/bash
+
+- name: Create peer binary
+  shell: |
+    go env -w GO111MODULE=auto
+    source base_parameters.sh
+    (cd ${FABRIC_ROOT} && make peer)
+  args:
+    chdir: "{{ scripts_path }}"
+    executable: /bin/bash
+
+
+
+
+
+
+
+
+

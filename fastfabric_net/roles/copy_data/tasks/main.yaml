@@ -1,0 +1,5 @@
+---
+
+- include_tasks: tasks/copy_files.yaml
+
+- include_tasks: tasks/change_settings.yaml

@@ -1,0 +1,17 @@
+# Ansible Playbook to setup a chaincode
+# Note: Call with -i inventory/network/hosts.ini
+---
+
+# Setup chaincode
+- hosts: endorser[0]
+  remote_user: ubuntu
+  #become: true
+  roles:
+    - { "role": chaincode_setup }
+  environment:
+    - PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ root_path }}:{{ root_path }}/bin"
+    - GOPATH: "{{ root_path }}"
+
+
+
+

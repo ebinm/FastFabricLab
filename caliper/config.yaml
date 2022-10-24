@@ -1,0 +1,48 @@
+test:
+  workers:
+    number: 5
+  rounds:
+    - label: Create a car.
+      # 1000 transactions should create around 200 cars per worker but not guaranteed
+      # so need to set asset limits to less than 200 for the other tests
+      txNumber: 1000
+      rateControl:
+          type: fixed-rate
+          opts:
+            tps: 500
+      workload:
+        module: workload_modules/fabcar/createCar.js
+    - label: Change car owner.
+      txNumber: 500
+      rateControl:
+          type: fixed-rate
+          opts:
+            tps: 500
+      workload:
+        module: workload_modules/fabcar/changeCarOwner.js
+        arguments:
+          assets: 200
+    - label: Query all cars.
+      txDuration: 10
+      rateControl:
+          type: fixed-rate
+          opts:
+            tps: 500
+      workload:
+        module: workload_modules/fabcar/queryAllCars.js
+        arguments:
+          assets: 200
+          startKey: '1'
+          endKey: '10'
+    - label: Query a car.
+      txDuration: 10
+      rateControl:
+          type: fixed-rate
+          opts:
+            tps: 500
+      workload:
+        module: workload_modules/fabcar/queryCar.js
+        arguments:
+          assets: 200
+
+

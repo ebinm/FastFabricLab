@@ -1,0 +1,23 @@
+test:
+  workers:
+    type: local
+    number: 5
+  rounds:
+    - label: createCar
+      txNumber: 1000
+      rateControl:
+          type: fixed-rate
+          opts:
+            tps: 500
+      workload:
+        module: workload_modules/fabcar/createCar.js
+    - label: queryCar
+      txNumber: 1000
+      rateControl:
+          type: fixed-rate
+          opts:
+            tps: 500
+      workload:
+        module: workload_modules/fabcar/queryCar.js
+        arguments:
+          assets: 10

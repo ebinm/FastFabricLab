@@ -1,0 +1,129 @@
+---
+# Run a script using a executable in a system path
+- name: Create Openstack instances for Orderer node
+  script:
+    cmd: >
+      openstack_instance.py create
+      --os-username {{ os_username }} --os-password {{ os_password }}
+      --os-base-url {{ os_base_url }} --os-project-domain-name {{ os_project_domain_name }}
+      --os-user-domain-name {{ os_user_domain_name }} --os-project-name {{ os_project_name }}
+      --flavour {{ instance_flavour }} --image {{ instance_image }}
+      --availability-zone {{ instance_availability_zone }}
+      {% for group in instance_security_groups %}--security-group {{ group }} {% endfor %}
+      --key {{ instance_image_key }}
+      {{ orderer_instance }}
+  args:
+    executable: python3
+  register: orderer_node
+
+
+- name: Add Orderer node to inventory
+  add_host:
+    name: "{{ orderer_node.stdout.split(',')[1] | replace('\n', '') }}"
+    instance_name: "{{ orderer_node.stdout.split(',')[0] }}"
+    groups:
+      - network
+      - orderer
+    inventory_dir: "{{inventory_dir}}"
+  when: orderer_node is defined
+
+
+- name: Create Openstack instances for Storage node
+  script:
+    cmd: >
+      openstack_instance.py create
+      --os-username {{ os_username }} --os-password {{ os_password }}
+      --os-base-url {{ os_base_url }} --os-project-domain-name {{ os_project_domain_name }}
+      --os-user-domain-name {{ os_user_domain_name }} --os-project-name {{ os_project_name }}
+      --flavour {{ instance_flavour }} --image {{ instance_image }}
+      --availability-zone {{ instance_availability_zone }}
+      {% for group in instance_security_groups %}--security-group {{ group }} {% endfor %}
+      --key {{ instance_image_key }}
+      {{ storage_instance }}
+  args:
+    executable: python3
+  register: storage_node
+
+- name: Add Storage node to inventory
+  add_host:
+    name: "{{ storage_node.stdout.split(',')[1] | replace('\n', '') }}"
+    instance_name: "{{ storage_node.stdout.split(',')[0] }}"
+    groups:
+      - network
+      - storage
+    inventory_dir: "{{inventory_dir}}"
+  when: storage_node is defined
+
+
+- name: Create Openstack instances for Endorser node
+  script:
+    cmd: >
+      openstack_instance.py create
+      --os-username {{ os_username }} --os-password {{ os_password }}
+      --os-base-url {{ os_base_url }} --os-project-domain-name {{ os_project_domain_name }}
+      --os-user-domain-name {{ os_user_domain_name }} --os-project-name {{ os_project_name }}
+      --flavour {{ instance_flavour }} --image {{ instance_image }}
+      --availability-zone {{ instance_availability_zone }}
+      {% for group in instance_security_groups %}--security-group {{ group }} {% endfor %}
+      --key {{ instance_image_key }}
+      {{ item }}
+  args:
+    executable: python3
+  with_items: "{{ endorser_instances }}"
+  register: endorser_nodes
+
+#- debug: msg="{{ endorser_nodes }}"
+
+- name: Add Endorser node to inventory
+  add_host:
+    name: "{{ item.stdout.split(',')[1] | replace('\n', '') }}"
+    instance_name: "{{ item.stdout.split(',')[0] }}"
+    groups:
+      - network
+      - endorser
+    inventory_dir: "{{inventory_dir}}"
+  with_items: "{{ endorser_nodes.results }}"
+  when: endorser_nodes.results is defined
+
+
+- name: Create Openstack instances for Fastpeer node
+  script:
+    cmd: >
+      openstack_instance.py create
+      --os-username {{ os_username }} --os-password {{ os_password }}
+      --os-base-url {{ os_base_url }} --os-project-domain-name {{ os_project_domain_name }}
+      --os-user-domain-name {{ os_user_domain_name }} --os-project-name {{ os_project_name }}
+      --flavour {{ instance_flavour }} --image {{ instance_image }}
+      --availability-zone {{ instance_availability_zone }}
+      {% for group in instance_security_groups %}--security-group {{ group }} {% endfor %}
+      --key {{ instance_image_key }}
+      {{ fastpeer_instance }}
+  args:
+    executable: python3
+  register: fastpeer_node
+
+- name: Add Fastpeer node to inventory
+  add_host:
+    name: "{{ fastpeer_node.stdout.split(',')[1] | replace('\n', '') }}"
+    instance_name: "{{ fastpeer_node.stdout.split(',')[0] }}"
+    groups:
+      - network
+      - fastpeer
+    inventory_dir: "{{inventory_dir}}"
+  when: fastpeer_node is defined
+
+
+- name: Create cluster setup inventory
+  template:
+    src=cluster.hosts.ini.j2 dest={{ cluster_inventory_file }} mode=0644
+
+- name: Create network setup inventory
+  template:
+    src=network.hosts.ini.j2 dest={{ network_inventory_file }} mode=0644
+
+- name: Create benchmark setup inventory
+  template:
+    src=network.hosts.ini.j2 dest={{ benchmark_inventory_file }} mode=0644
+
+
+

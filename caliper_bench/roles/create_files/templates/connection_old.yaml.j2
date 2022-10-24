@@ -1,0 +1,29 @@
+---
+name: {{ channel }}
+version: 1.0.0
+client:
+    organization: Org1
+    connection:
+        timeout:
+            peer:
+                endorser: '300'
+            orderer: '300'
+channels:
+    {{ channel }}:
+        orderers:
+        - {{ orderer }}
+        peers:
+            {{ endorser }}: {}
+organizations:
+    Org1:
+        mspid: Org1MSP
+        peers:
+        - {{ endorser }}
+        signedCert:
+            path: ../fabric_scripts/crypto-config/peerOrganizations/{{ peer_domain }}/users/Admin@{{ peer_domain }}/msp/signcerts/Admin@{{ peer_domain }}-cert.pem
+orderers:
+    {{ orderer }}:
+        url: grpc://{{ orderer }}:7050
+peers:
+    {{ endorser }}:
+        url: grpc://{{ endorser }}:7051

@@ -1,0 +1,25 @@
+# Ansible Playbook to delete the cluster
+# Note: Call with -i inventory/infra/hosts.ini
+---
+# Warn user before deletion
+- hosts: localhost
+  vars_prompt:
+    - name: "prompt_del_inf"
+      prompt: "Caution: This will delete the complete cluster including all cloud instances. Are you sure (yes/no)?"
+      default: "yes"
+      private: no
+  tasks:
+    - set_fact:
+        prompt_delete_infra: "{{ prompt_del_inf }}"
+
+# Delete Instances
+- hosts: cli
+  roles:
+    - { "role": one_instance, "delete": true, when: prompt_delete_infra|bool }
+
+- hosts: cli
+  tasks:
+    - file:
+        path: "{{ inventory_path }}/cloud.ignore"
+        state: absent
+        mode: 664

@@ -1,0 +1,24 @@
+test:
+  workers:
+    number: 5
+  rounds:
+    - label: initMarble
+      txNumber: 1000
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 500
+      workload:
+        module: workload_modules/marbles/initMarble.js
+    - label: queryMarble
+      txNumber: 1000
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 500
+      workload:
+        module: workload_modules/marbles/readMarble.js
+
+
+
+

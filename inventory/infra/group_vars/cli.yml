@@ -1,0 +1,40 @@
+# ONE params
+one_username: "{{ lookup('env', 'ONE_USERNAME') }}"
+one_password: "{{ lookup('env', 'ONE_PASSWORD') }}"
+one_base_url: "{{ lookup('env', 'ONE_URL') }}"
+
+# Cluster instances
+orderer_instance: "{{ lookup('env', 'ORDERER_ADDRESS') }}"
+fastpeer_instance: "{{ lookup('env', 'FAST_PEER_ADDRESS') }}"
+storage_instance: "{{ lookup('env', 'STORAGE_ADDRESS') }}"
+endorser_instances: "{{ lookup('env', 'ENDORSER_ADDRESSES')|split(':')}}"
+
+# Settings for OpenNebula
+instance_template_name: "Ubuntu 20.04 (incl. Contextualization)"
+instance_memory: "6 GB"
+instance_cpu: "2"
+instance_vcpu: "2"
+instance_disk_size: "10 GB"
+
+# OS params
+os_username: "'{{ lookup('env', 'OS_USERNAME') }}'"
+os_password: "'{{ lookup('env', 'OS_PASSWORD') }}'"
+os_base_url: "{{ lookup('env', 'OS_URL') }}"
+os_project_name: "'{{ lookup('env', 'OS_PROJECT_NAME') }}'"
+os_user_domain_name: "default"
+os_project_domain_name: "default"
+
+# Settings for Openstack
+instance_flavour: "m1.medium"
+instance_image: "kvm-ubuntu-focal"
+instance_availability_zone: "kvm-hdd"
+instance_security_groups: ["default"]        # Security groups to assign to nodes
+instance_image_key: "ansible-keypair"           # Key to use when creating an instance. Name should match the key in "Key-pairs" in openstack account
+
+# Network Inventory location
+inventory_path: "{{ lookup('env', 'INVENTORY_DIR_PATH') }}"
+infra_inventory_file: "{{ lookup('env', 'INVENTORY_DIR_PATH') }}/infra/hosts.gen.ini"
+cluster_inventory_file: "{{ lookup('env', 'INVENTORY_DIR_PATH') }}/cluster/hosts.ini"
+network_inventory_file: "{{ lookup('env', 'INVENTORY_DIR_PATH') }}/network/hosts.ini"
+benchmark_inventory_file: "{{ lookup('env', 'INVENTORY_DIR_PATH') }}/benchmark/hosts.ini"
+

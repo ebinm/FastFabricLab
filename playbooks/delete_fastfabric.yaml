@@ -1,0 +1,48 @@
+# Ansible Playbook to delete the fastfabric blockchain
+# Note: Call with -i inventory/network/hosts.ini
+---
+
+# Terminate orderer
+- hosts: orderer
+  remote_user: ubuntu
+  #become: true
+  roles:
+    - { "role": network_terminate, "orderer": true }
+  environment:
+    - PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ root_path }}:{{ root_path }}/bin"
+    - GOPATH: "{{ root_path }}"
+
+# Terminate storage
+- hosts: storage
+  remote_user: ubuntu
+  #become: true
+  roles:
+    - { "role": network_terminate, "peer": true }
+  environment:
+    - PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ root_path }}:{{ root_path }}/bin"
+    - GOPATH: "{{ root_path }}"
+
+# Terminate endorser
+- hosts: endorser
+  remote_user: ubuntu
+  #become: true
+  roles:
+    - { "role": network_terminate, "peer": true }
+  environment:
+    - PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ root_path }}:{{ root_path }}/bin"
+    - GOPATH: "{{ root_path }}"
+
+# Terminate fastpeer
+- hosts: fastpeer
+  remote_user: ubuntu
+  #become: true
+  roles:
+    - { "role": network_terminate, "peer": true }
+  environment:
+    - PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ root_path }}:{{ root_path }}/bin"
+    - GOPATH: "{{ root_path }}"
+
+
+
+
+

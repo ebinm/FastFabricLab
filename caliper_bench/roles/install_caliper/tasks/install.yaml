@@ -1,0 +1,25 @@
+---
+
+- name: Check Nodejs
+  apt: name=nodejs state=present
+
+- name: Check NPM
+  apt: name=npm state=present
+
+- name: Install caliper CLI
+  shell: |
+    sudo rm -rf node_modules
+    npm install --only=prod @hyperledger/caliper-cli
+    npx caliper bind --caliper-bind-sut fabric:1.4
+  args:
+    chdir: "{{ caliper_path }}"
+    executable: /bin/bash
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,15 @@
+---
+
+- name: Check if orderer is running
+  stat: 
+    path: "{{ root_path }}/running.ignore"
+  register: running
+
+- include_tasks: tasks/start_orderer.yaml
+  when: running.stat.exists == False
+
+- name: Mark orderer as running
+  file:
+      path: "{{ root_path }}/running.ignore"
+      state: touch
+      mode: 664

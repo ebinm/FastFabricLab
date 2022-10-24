@@ -1,0 +1,9 @@
+---
+
+- include_tasks: tasks/install.yaml
+
+- include_tasks: tasks/setup_hosts.yaml
+
+- include_tasks: tasks/export_variables.yaml
+
+

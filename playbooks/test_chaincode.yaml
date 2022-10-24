@@ -1,0 +1,17 @@
+# Ansible Playbook to to test the chaincode
+# Note: Call with -i inventory/network/hosts.ini
+---
+
+# Test chaincode
+- hosts: endorser[0]
+  remote_user: ubuntu
+  #become: true
+  roles:
+    - { "role": test_chaincode }
+  environment:
+    - PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ root_path }}:{{ root_path }}/bin"
+    - GOPATH: "{{ root_path }}"
+
+
+
+

@@ -1,0 +1,49 @@
+###############################################
+######### OPENSTACK INFRA HOSTS ################
+###############################################
+
+# ## configure a bastion host if your nodes are not directly reachable
+# bastion ansible_host=x.x.x.x ansible_user=some_user
+{% for ip in (groups['network']) | unique  %}
+{{ hostvars[ip].instance_name }} ansible_host={{ ip }}
+{% endfor %}
+
+[cli]
+localhost ansible_connection=local ansible_python_interpreter={{ansible_playbook_python}}
+
+
+[orderer]
+# Order Node: To be added dynamically
+{% for ip in groups['orderer'] %}
+{{ hostvars[ip].instance_name }} instance_name={{ hostvars[ip].instance_name }} instance_id={{ hostvars[ip].instance_id }}
+{% endfor %}
+
+
+
+[storage]
+# Storage Node: To be added dynamically
+{% for ip in groups['storage'] %}
+{{ hostvars[ip].instance_name }} instance_name={{ hostvars[ip].instance_name }} instance_id={{ hostvars[ip].instance_id }}
+{% endfor %}
+
+
+[endorser]
+# Endorser Node: To be added dynamically
+{% for ip in groups['endorser'] %}
+{{ hostvars[ip].instance_name }} instance_name={{ hostvars[ip].instance_name }} instance_id={{ hostvars[ip].instance_id }}
+{% endfor %}
+
+
+[fastpeer]
+# Fastpeer Node: To be added dynamically
+{% for ip in groups['fastpeer'] %}
+{{ hostvars[ip].instance_name }} instance_name={{ hostvars[ip].instance_name }} instance_id={{ hostvars[ip].instance_id }}
+{% endfor %}
+
+
+[network]
+# Network Nodes: To be added dynamically
+{% for ip in groups['network'] %}
+{{ hostvars[ip].instance_name }} instance_name={{ hostvars[ip].instance_name }} instance_id={{ hostvars[ip].instance_id }}
+{% endfor %}
+

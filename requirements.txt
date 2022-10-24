@@ -1,0 +1,5 @@
+ansible
+python-openstackclient
+jinja2
+pyone
+

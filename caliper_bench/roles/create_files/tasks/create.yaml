@@ -1,0 +1,63 @@
+---
+
+- name: Create connection.yaml file for caliper
+  template:
+    src=connection.yaml.j2 dest={{ caliper_path }}/connection.yaml mode=0644
+
+- name: Find key file name
+  find:
+    paths: "{{ scripts_path }}/crypto-config/peerOrganizations/{{ peer_domain }}/users/User1@{{ peer_domain }}/msp/keystore"
+  register: files
+
+- name: Create network.yaml file for caliper
+  template:
+    src=network.yaml.j2 dest={{ caliper_path }}/network.yaml mode=0644
+
+#- name: Create changeCarOwner.js file for caliper
+#  template:
+#    src=changeCarOwner.js.j2 dest={{ caliper_path }}/benchmarks/changeCarOwner.js mode=0644
+
+#- name: Create createCar.js file for caliper
+#  template:
+#    src=createCar.js.j2 dest={{ caliper_path }}/benchmarks/createCar.js mode=0644
+
+#- name: Create queryCar.js file for caliper
+#  template:
+#    src=queryCar.js.j2 dest={{ caliper_path }}/benchmarks/queryCar.js mode=0644
+
+#- name: Create queryAllCars.js file for caliper
+#  template:
+#    src=queryAllCars.js.j2 dest={{ caliper_path }}/benchmarks/queryAllCars.js mode=0644
+
+#- name: Get all benchmark files
+#  command: "ls {{ caliper_path}}/workload_modules"
+#  register: dir_out
+
+- name: Recursively find workloadmodules
+  find:
+    paths: "{{ caliper_path}}/workload_modules"
+    file_type: file
+    recurse: yes
+  register: dir_out
+
+#- debug: var={{item}}
+#  with_items: dir_out.files
+
+- name: Replace the channelID with the specified channel name
+  lineinfile:
+    path: "{{ item.path }}"
+    regexp: 'contractId:'
+    line: "contractId: '{{ chaincode }}',"
+    backrefs: yes
+  with_items: "{{ dir_out.files }}"
+  
+
+
+
+
+
+
+
+
+
+

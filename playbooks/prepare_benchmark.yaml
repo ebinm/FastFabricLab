@@ -1,0 +1,26 @@
+# Ansible Playbook to prepare Cli for Caliper benchmark
+# Note: Call with -i inventory/benchmark/hosts.ini
+---
+
+# Setup Caliper
+- hosts: cli
+  remote_user: ubuntu
+  #become: true
+  roles:
+    - { "role": install_caliper }
+  environment:
+    - PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ root_path }}:{{ root_path }}/bin"
+    - GOPATH: "{{ root_path }}"
+
+# Create neccesary files
+- hosts: cli
+  remote_user: ubuntu
+  #become: true
+  roles:
+    - { "role": create_files }
+  environment:
+    - PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ root_path }}:{{ root_path }}/bin"
+    - GOPATH: "{{ root_path }}"
+
+
+

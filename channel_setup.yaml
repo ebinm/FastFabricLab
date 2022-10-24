@@ -1,0 +1,3 @@
+# To be called with -i inventory/network/hosts.ini
+---
+- import_playbook: playbooks/channel_setup.yaml

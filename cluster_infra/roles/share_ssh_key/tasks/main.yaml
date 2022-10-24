@@ -1,0 +1,6 @@
+---
+- name: Copy ssh-key to nodes
+  copy:
+    src: "{{ lookup('env', 'SSH_KEY') }}"
+    dest: "/home/ubuntu/.ssh/ansible-keypair.pem"  
+    follow: yes

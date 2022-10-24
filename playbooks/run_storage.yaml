@@ -1,0 +1,17 @@
+# Ansible Playbook to run storage node
+# Note: Call with -i inventory/network/hosts.ini
+---
+
+# Run storage
+- hosts: storage
+  remote_user: ubuntu
+  #become: true
+  roles:
+    - { "role": storage }
+  environment:
+    - PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ root_path }}:{{ root_path }}/bin"
+    - GOPATH: "{{ root_path }}"
+
+
+
+

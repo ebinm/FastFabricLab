@@ -1,0 +1,31 @@
+---
+
+- name: Change permission for scripts directory
+  file:
+    path: "{{ root_path }}"
+    mode: '0777'
+    recurse: yes
+
+- name: Create directory for production
+  command: mkdir -p -m777 /var/hyperledger/production
+
+- name: Change go module variable 
+  command: go env -w GO111MODULE=auto
+  become: no
+
+#- name: Check go env variables
+#  command: go env
+
+- name: Add the user to docker group
+  user:
+    name: ubuntu
+    shell: /bin/bash
+    groups: docker
+    append: yes
+
+- name: reset ssh connection to allow user changes to affect ansible user
+  meta:
+    reset_connection
+
+#- name: Create directory for production data
+#  command: groups ubuntu

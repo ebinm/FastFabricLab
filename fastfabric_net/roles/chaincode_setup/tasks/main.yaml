@@ -1,0 +1,8 @@
+---
+
+- name: Setup chaincode
+  shell: |
+    go env -w GO111MODULE=auto
+    ./chaincode_setup.sh
+  args:
+    chdir: "{{ scripts_path }}"

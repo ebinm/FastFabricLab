@@ -1,0 +1,128 @@
+---
+- name: Create OpenNebula instances for Orderer node
+  one_vm:
+    api_url: "{{ one_base_url }}"
+    api_username: "{{ one_username }}"
+    api_password: "{{ one_password }}"
+    attributes:
+      name: "{{ orderer_instance }}"
+    template_name: "{{ instance_template_name }}"
+    disk_size: "{{ instance_disk_size }}"
+    memory: "{{ instance_memory }}"
+    cpu: "{{ instance_cpu }}"
+    vcpu: "{{ instance_vcpu }}"
+  register: orderer_node
+
+
+- name: Add Orderer node to inventory
+  add_host:
+    instance_name: "{{ orderer_node.instances[0].vm_name }}"
+    name: "{{ orderer_node.instances[0].networks[0].ip }}"
+    instance_id: "{{ orderer_node.instances[0].vm_id }}"
+    groups:
+      - network
+      - orderer
+    inventory_dir: "{{inventory_dir}}"
+  when: orderer_node is defined
+
+
+- name: Create OpenNebula instances for Storage node
+  one_vm:
+    api_url: "{{ one_base_url }}"
+    api_username: "{{ one_username }}"
+    api_password: "{{ one_password }}"
+    attributes:
+      name: "{{ storage_instance }}"
+    template_name: "{{ instance_template_name }}"
+    disk_size: "{{ instance_disk_size }}"
+    memory: "{{ instance_memory }}"
+    cpu: "{{ instance_cpu }}"
+    vcpu: "{{ instance_vcpu }}"
+  register: storage_node
+
+- name: Add Storage node to inventory
+  add_host:
+    instance_name: "{{ storage_node.instances[0].vm_name }}"
+    name: "{{ storage_node.instances[0].networks[0].ip }}"
+    instance_id: "{{ storage_node.instances[0].vm_id }}"
+    groups:
+      - network
+      - storage
+    inventory_dir: "{{inventory_dir}}"
+  when: storage_node is defined
+
+
+- name: Create OpenNebula instances for Endorser node
+  one_vm:
+    api_url: "{{ one_base_url }}"
+    api_username: "{{ one_username }}"
+    api_password: "{{ one_password }}"
+    attributes:
+      name: "{{ item }}"
+    template_name: "{{ instance_template_name }}"
+    disk_size: "{{ instance_disk_size }}"
+    memory: "{{ instance_memory }}"
+    cpu: "{{ instance_cpu }}"
+    vcpu: "{{ instance_vcpu }}"
+  with_items: "{{ endorser_instances }}"
+  register: endorser_nodes
+
+#- debug: msg="{{ endorser_nodes }}"
+
+- name: Add Endorser node to inventory
+  add_host:
+    instance_name: "{{ item.instances[0].vm_name }}"
+    name: "{{ item.instances[0].networks[0].ip }}"
+    instance_id: "{{ item.instances[0].vm_id }}"
+    groups:
+      - network
+      - endorser
+    inventory_dir: "{{inventory_dir}}"
+  with_items: "{{ endorser_nodes.results }}"
+  when: endorser_nodes.results is defined
+
+
+- name: Create OpenNebula instances for Fastpeer node
+  one_vm:
+    api_url: "{{ one_base_url }}"
+    api_username: "{{ one_username }}"
+    api_password: "{{ one_password }}"
+    attributes:
+      name: "{{ fastpeer_instance }}"
+    template_name: "{{ instance_template_name }}"
+    disk_size: "{{ instance_disk_size }}"
+    memory: "{{ instance_memory }}"
+    cpu: "{{ instance_cpu }}"
+    vcpu: "{{ instance_vcpu }}"
+  register: fastpeer_node
+
+- name: Add Fastpeer node to inventory
+  add_host:
+    instance_name: "{{ fastpeer_node.instances[0].vm_name }}"
+    name: "{{ fastpeer_node.instances[0].networks[0].ip }}"
+    instance_id: "{{ fastpeer_node.instances[0].vm_id }}"
+    groups:
+      - network
+      - fastpeer
+    inventory_dir: "{{inventory_dir}}"
+  when: fastpeer_node is defined
+
+- name: Create infra setup inventory
+  template:
+    src=infra.hosts.ini.j2 dest={{ infra_inventory_file }} mode=0644
+
+- name: Create cluster setup inventory
+  template:
+    src=cluster.hosts.ini.j2 dest={{ cluster_inventory_file }} mode=0644
+
+- name: Create network setup inventory
+  template:
+    src=network.hosts.ini.j2 dest={{ network_inventory_file }} mode=0644
+
+- name: Create benchmark setup inventory
+  template:
+    src=network.hosts.ini.j2 dest={{ benchmark_inventory_file }} mode=0644
+
+
+
+

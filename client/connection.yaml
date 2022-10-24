@@ -1,0 +1,33 @@
+---
+name: mychannel
+version: 1.0.0
+client:
+    organization: Org1
+    connection:
+        timeout:
+            peer:
+                endorser: '300'
+            orderer: '300'
+channels:
+    mychannel:
+        orderers:
+        - fastfabric-orderer
+        peers:
+            fastfabric-endorser1: {}
+            fastfabric-endorser2: {}
+organizations:
+    Org1:
+        mspid: Org1MSP
+        peers:
+        - fastfabric-endorser1
+        - fastfabric-endorser2
+        signedCert:
+            path: ../fabric_scripts/crypto-config/peerOrganizations/peer/users/Admin@peer/msp/signcerts/Admin@peer-cert.pem
+orderers:
+    fastfabric-orderer:
+        url: grpc://fastfabric-orderer:7050
+peers:
+    fastfabric-endorser1:
+        url: grpc://fastfabric-endorser1:7051
+    fastfabric-endorser2:
+        url: grpc://fastfabric-endorser2:7051

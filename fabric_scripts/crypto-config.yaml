@@ -1,0 +1,18 @@
+OrdererOrgs:
+- Name: Orderer
+  Domain: orderer
+  Specs:
+    - Hostname: fastfabric-orderer
+PeerOrgs:
+- Name: Org1
+  Domain: peer
+  EnableNodeOUs: true
+  Specs:
+    - Hostname: fastfabric-fastpeer
+    - Hostname: fastfabric-endorser2
+    - Hostname: fastfabric-endorser1
+    
+    - Hostname: fastfabric-storage
+    
+  Users:
+    Count: 1

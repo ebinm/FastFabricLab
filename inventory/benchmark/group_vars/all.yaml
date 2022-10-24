@@ -1,0 +1,27 @@
+#######################################
+###### Variables for all hosts ########
+#######################################
+
+# SSH access key for all instances
+ansible_ssh_private_key_file: "{{ lookup('env', 'SSH_KEY') }}"
+ansible_user: ubuntu
+#ansible_become: true
+
+# Network params
+peer_domain: "{{ lookup('env', 'PEER_DOMAIN') }}"
+orderer_domain: "{{ lookup('env', 'ORDERER_DOMAIN') }}"
+
+fastpeer_address: "{{ lookup('env', 'FAST_PEER_ADDRESS') }}"
+orderer_address: "{{ lookup('env', 'ORDERER_ADDRESS') }}"
+endorser_instances: "{{ lookup('env', 'ENDORSER_ADDRESSES')|split(':')}}"
+storage_address: "{{ lookup('env', 'STORAGE_ADDRESS') }}"
+
+channel: "{{ lookup('env', 'CHANNEL') }}"
+chaincode: "{{ lookup('env', 'CHAINCODE') }}"
+
+# Root path
+cli_root_path: "{{ lookup('env', 'ROOT_PATH') }}"
+cli_inventory_path: "{{ lookup('env', 'INVENTORY_DIR_PATH') }}"
+#cli_fabric_path: "{{ cli_root_path }}/src/github.com/hyperledger/fabric"
+cli_scripts_path: "{{ root_path }}/fabric_scripts"
+

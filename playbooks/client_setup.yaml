@@ -1,0 +1,17 @@
+# Ansible Playbook to setup a client
+# Note: Call with -i inventory/network/hosts.ini
+---
+
+# Setup client
+- hosts: cli
+  remote_user: ubuntu
+  #become: true
+  roles:
+    - { "role": client_setup }
+  environment:
+    - PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ root_path }}:{{ root_path }}/bin"
+    - GOPATH: "{{ root_path }}"
+
+
+
+

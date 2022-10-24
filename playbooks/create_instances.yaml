@@ -1,0 +1,26 @@
+# Ansible Playbook to create cluster setup
+# Note: Call with -i inventory/infra/hosts.ini
+---
+# Look if cluster instances already exist
+- hosts: cli
+  tasks:
+    - stat: 
+        path: "{{ inventory_path }}/cloud.ignore"
+      register: cloud
+    
+# Create cluster instances
+- hosts: cli
+  roles:
+    - { "role": one_instance, "create": true, when: cloud.stat.exists == False }
+
+# Mark cluster instances as created
+- hosts: cli
+  tasks:
+    - file:
+        path: "{{ inventory_path }}/cloud.ignore"
+        state: touch
+        mode: 664
+
+
+
+  

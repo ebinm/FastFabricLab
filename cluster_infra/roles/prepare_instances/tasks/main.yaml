@@ -1,0 +1,3 @@
+---
+- include: tasks/pre.yaml
+  when: pre|default(false)

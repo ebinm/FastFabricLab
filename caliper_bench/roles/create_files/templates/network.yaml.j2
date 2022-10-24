@@ -1,0 +1,26 @@
+name: Caliper Benchmarks
+version: "2.0.0"
+
+caliper:
+  blockchain: fabric
+
+channels:
+  # channelName of mychannel matches the name of the channel created by network
+  - channelName: {{ channel }}
+    # the chaincodeIDs of all the fabric chaincodes in caliper-benchmarks
+    contracts:
+    - id: {{ chaincode }}
+
+organizations:
+  - mspid: Org1MSP
+    # Identities come from cryptogen created material for network
+    identities:
+      certificates:
+      - name: 'User1'
+        clientPrivateKey:
+          path: '{{ files.files[0].path }}'
+        clientSignedCert:
+          path: '../fabric_scripts/crypto-config/peerOrganizations/{{ peer_domain }}/users/User1@{{ peer_domain }}/msp/signcerts/User1@{{ peer_domain }}-cert.pem'
+    connectionProfile:
+      path: 'connection.yaml'
+      discover: false

@@ -1,0 +1,11 @@
+#######################################
+###### Variables for cli host ########
+#######################################
+
+# Root path
+root_path: "/home/ubuntu/FastFabricLab"
+fabric_path: "{{ root_path }}/src/github.com/hyperledger/fabric"
+scripts_path: "{{ fabric_path }}/fastfabric/scripts"
+
+
+

@@ -1,0 +1,7 @@
+---
+
+- name: Terminate network
+  shell: |
+    killall peer
+  args:
+    chdir: "{{ scripts_path }}"

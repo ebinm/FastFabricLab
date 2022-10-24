@@ -1,0 +1,15 @@
+---
+- name: check if caliper is already installed
+  stat: 
+    path: "{{ inventory_path }}/caliper.ignore"
+  register: caliper
+
+- include_tasks: tasks/install.yaml
+  when: caliper.stat.exists == False
+
+- name: Mark caliper as installed
+  file:
+      path: "{{ inventory_path }}/caliper.ignore"
+      state: touch
+      mode: 664
+

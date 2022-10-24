@@ -1,0 +1,48 @@
+# Ansible Playbook to prepare instances for FastFabric setup
+# Note: Call with -i inventory/cluster/hosts.ini
+---
+# Pre setup tasks
+- hosts: cli
+  #gather_facts: no
+  roles:
+    - { "role": prepare_instances, "pre": true }
+
+# Share ssh-key
+- hosts: network
+  remote_user: ubuntu
+  become: true
+  roles:
+    - { "role": share_ssh_key }
+
+# Install prerequisites
+- hosts: cli:network
+  remote_user: ubuntu
+  become: true
+  roles:
+    - role: install_prerequisites
+      register: result
+      retries: 3
+      delay: 30
+      until: result is success
+
+
+# Setup CLI
+#- hosts: cli
+#  remote_user: ubuntu
+#  become: true
+#  roles:
+#    - { "role": prepare_cli }
+#  environment:
+#    - PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ root_path }}:{{ root_path }}/bin"
+#    - GOPATH: "{{ root_path }}"
+
+# Setup Network
+#- hosts: network
+#  remote_user: ubuntu
+#  become: true
+#  roles:
+#    - { "role": install_fastfabric }
+#  environment:
+#    - PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ root_path }}:{{ root_path }}/bin"
+#    - GOPATH: "{{ root_path }}"
+

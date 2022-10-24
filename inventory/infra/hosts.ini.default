@@ -1,0 +1,23 @@
+###############################################
+######### OPENSTACK INFRA HOSTS ################
+###############################################
+
+[cli]
+localhost ansible_connection=local ansible_python_interpreter={{ansible_playbook_python}}
+
+
+[orderer]
+# Orderer Node: Placeholder
+
+[storage]
+# Storage Node: Placeholder
+
+[endorser]
+# Endorser Node: Placeholder
+
+[fastpeer]
+# Fastpeer Nodes: Placeholder
+
+[network]
+# All Network Nodes: Placeholder
+

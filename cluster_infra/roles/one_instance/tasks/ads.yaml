@@ -1,0 +1,26 @@
+---
+- pip: name=pyone state=present
+
+- name: Create Openstack instances for Orderer node
+  one_vm:
+    api_url: "{{ one_base_url }}"
+    api_username: "{{ one_username }}"
+    api_password: "{{ one_password }}"
+    attributes:
+      name: "{{orderer_instance }}"
+    template_name: "{{ instance_template_name }}"
+    disk_size: "{{ instance_disk_size }}"
+    memory: "{{ instance_memory }}"
+    vcpu: "{{ instance_vcpu }}"
+  register: orderer_node
+
+
+- name: Add Orderer node to inventory
+  add_host:
+    name: "{{ orderer_node.instances[0].vm_name }}"
+    instance_name: "{{ orderer_node.instances[0].networks[0].ip }}"
+    groups:
+      - network
+      - orderer
+    inventory_dir: "{{inventory_dir}}"
+  when: orderer_node is defined

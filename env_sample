@@ -1,0 +1,21 @@
+# Authentication Variables for Openstack
+export OS_USERNAME="<username>"
+export OS_PASSWORD="<password>"
+export OS_PROJECT_NAME="<project-name>"
+export OS_URL="https://openstack.msrg.in.tum.de"
+
+# Authentication Variables for OpenNebula
+export ONE_USERNAME="<username>"
+export ONE_PASSWORD="<password>"
+export ONE_URL="http://cloud.msrg.in.tum.de:2633/RPC2"
+
+export SSH_KEY="/home/ubuntu/.ssh/ansible-keypair"         # Path to ssh key on CLI host
+
+# GO lang path for chaincode location. Tell caliper to not overwrite it
+export GOPATH="$(pwd)"
+#export OVERWRITE_GOPATH=false
+
+# Environment Variables for network setup
+export INVENTORY_DIR_PATH="$(pwd)/inventory"
+export ROOT_PATH="$(pwd)"
+

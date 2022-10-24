@@ -1,0 +1,21 @@
+---
+- name: Install packages based on package.json in client
+  npm:
+    path: "{{  root_path }}/client"
+
+- name: Create connection.yaml file for client
+  template:
+    src=connection.yaml.j2 dest={{ root_path }}/client/connection.yaml mode=0644
+
+- name: Create addToWallet.js file for client
+  template:
+    src=addToWallet.js.j2 dest={{ root_path }}/client/addToWallet.js mode=0644
+
+- name: Create query.js file for client
+  template:
+    src=query.js.j2 dest={{ root_path }}/client/query.js mode=0644
+
+- name: Create invoke.js file for client
+  template:
+    src=invoke.js.j2 dest={{ root_path }}/client/invoke.js mode=0644
+
