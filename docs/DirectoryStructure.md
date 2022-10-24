@@ -1,3 +1,6 @@
+Directory Structure
+---------------
+
 A combination of Ansible, Nodejs and Shell scripts is used for the automation of various tasks.
 
 Directory structure is as follows:
