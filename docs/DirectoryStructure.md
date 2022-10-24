@@ -1,4 +1,4 @@
-A combination of ansible, nodejs and shell scripts is used for automation of various tasks.
+A combination of Ansible, Nodejs and Shell scripts is used for the automation of various tasks.
 
 Directory structure is as follows:
 1. **[`bin/`](../bin)**: It contains all binaries to run the FastFabric network
