@@ -3,7 +3,7 @@ Directory Structure
 
 A combination of Ansible, Nodejs and Shell scripts is used for the automation of various tasks.
 
-Directory structure is as follows:
+The directory structure is as follows:
 1. **[`bin/`](../bin)**: It contains all binaries to run the FastFabric network
 2. **[`caliper/`](../caliper)**: An external module called Caliper used for collecting metrics for FastFabric.
     * [`caliper/workload_modules`](../caliper/workload_modules): It contains workload modules for Caliper benchmarks.
