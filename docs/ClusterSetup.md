@@ -2,7 +2,7 @@ Cluster Setup for OpenNebula
 ---------------
 
 The following steps explain the setup for OpenNebula. For OpenStack use the [OpenStackSetup](OpenStackSetup.md).  
-Note: Each step depends upon the success of previous step. 
+Note: Each step depends upon the success of the previous steps. 
 
 1. Create an instance on the cloud platform and name it "CLI"
     * This instance will be used as the access point for the FastFabric network and as host for Ansible.
