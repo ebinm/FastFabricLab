@@ -38,7 +38,7 @@ Note: Each step depends upon the success of previous step.
    **Note:** It is recommanded to use the first option to keep the ssh key consistent in the network and not change key between CLI and FastFabric nodes.
 
 6. Set up cloud cluster
-    * Check that all details are correct in [cli](../inventory/infra/group_vars/cli.yml) and match your OpenNebula account. 
+    * Check that all details are correct in [cli.yaml](../inventory/infra/group_vars/cli.yml) and match your OpenNebula account. 
     * Make modifications if required under `Settings for OpenNebula`:
         * Instance Disk Size: Ideally all instances should have a disk size of 10 GB.
         * Instance Template: Choose a template with ubuntu-20.04.
