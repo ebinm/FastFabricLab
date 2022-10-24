@@ -2,7 +2,7 @@ FastFabric Setup
 ------------
 
 Continue the setup from in the FastFabricLab directory of the CLI.  
-Note: Each step depends upon the success of the previous steps. 
+**Note:** Each step depends upon the success of the previous steps. 
 
 1. Set up and create FastFabric network  
     * Run the script [fastfabric_setup.sh](../scripts/fastfabric_setup.sh) with `./scripts/fastfabric_setup.sh [-r]`.
