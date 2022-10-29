@@ -8,7 +8,7 @@ The following steps explain the setup for OpenNebula. For OpenStack use the [Ope
     * This instance will be used as the access point for the FastFabric network and as host for Ansible.
     * Use any ssh key you want. To generate a ssh key on Linux use `ssh-keygen -t rsa -b 4096`.
     * Import the public key to your cluster platform. In OpenNebula: Settings > Update SSH Key > [Insert your publilc key] Update SSH key.
-    * Create the CLI instance with the ssh key. In OpenNebula: VMs > + > ubuntu-20.04 > [Use the resources as you like e.g. Memory 6 GB, Physical CPU 2, Virtual CPU 2, Disk 15 GB] > Create.
+    * Create the CLI instance with the ssh key. In OpenNebula: VMs > + > [ubuntu 20.04 template] > [Use the resources as you like e.g. Memory 6 GB, Physical CPU 2, Virtual CPU 2, Disk 15 GB] > Create.
     * SSH into the CLI and all following commands should be executed from this instance.
 
 2. Clone git repository
