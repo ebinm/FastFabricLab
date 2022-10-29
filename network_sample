@@ -16,4 +16,9 @@ export CHAINCODE="fabcar"             # the name of the chaincode used on the ch
 # leave function blank if no function is available
 export FUNCTION='{"function":"initLedger","Args":[]}'      # function to initialize the chaincode
 
+#Fabcar: '{"function":"initLedger","Args":[]}'
+
+#Marbles: '{"function":"initMarble","Args":["testMarble", "blue", "35", "bob"]}'
+
+#Smallbank: '{"function":"create_account","Args":["testAccount", "bob", "1000", "1000"]}'
 
