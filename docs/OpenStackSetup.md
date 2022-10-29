@@ -11,6 +11,8 @@ The following steps explain the setup for OpenStack. For OpenNebula use [OpenNeb
     * Create the CLI instance with the ssh key in OpenStack.
     * SSH into the CLI and all following commands should be executed from this instance.
 
+   **Note:** It is recommanded to use a minimum of 15 GB for the disk size of the CLI to prevent any space errors.
+
 2. Clone git repository
     * Change directory to the directory where you want to clone the repository e.g. `cd $HOME`.
     * Clone this git repository with `git clone https://github.com/ebinm/FastFabricLab.git`.
