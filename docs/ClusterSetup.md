@@ -11,6 +11,8 @@ The following steps explain the setup for OpenNebula. For OpenStack use the [Ope
     * Create the CLI instance with the ssh key. In OpenNebula: VMs > + > [ubuntu 20.04 template] > [Use the resources as you like e.g. Memory 6 GB, Physical CPU 2, Virtual CPU 2, Disk 15 GB] > Create.
     * SSH into the CLI and all following commands should be executed from this instance.
 
+Note: It is recommanded to use a minimum of 15 GB for the disk size of the CLI to prevent any space errors.
+
 2. Clone git repository
     * Change directory to the directory where you want to clone the repository e.g. `cd $HOME`.
     * Clone this git repository with `git clone https://github.com/ebinm/FastFabricLab.git`.
