@@ -19,7 +19,7 @@ done
 export CORE_PEER_ADDRESS=$(get_correct_peer_address ${endorsers[0]}):7051
 echo peer chaincode instantiate -o $(get_correct_orderer_address):7050 -C ${CHANNEL} -n ${CHAINCODE} -v 1.0 -c '{\"Args\":[]}' | bash
 
-sleep 5
+sleep 10
 
 if [[ -z ${ENDORSER_ADDRESS[@]} ]]
 then
